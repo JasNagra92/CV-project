@@ -1,4 +1,5 @@
 import React from "react";
+import {AiFillPhone} from 'react-icons/ai'
 
 class Phone extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class Phone extends React.Component {
         <p 
         style={viewMode}
         onDoubleClick={(e) => this.handleSubmit(e)}
-        >Phone Number: {this.props.phoneProp}</p>
+        ><AiFillPhone />Phone Number: {this.props.phoneProp}</p>
       </div>
     );
   }

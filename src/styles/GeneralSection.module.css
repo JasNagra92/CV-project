@@ -1,0 +1,16 @@
+.general{
+    display: grid;
+    grid-template-rows: 2fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    border-bottom: 5px solid black;
+}
+.email,
+.phone{
+    display:flex;
+    justify-content: right;
+}
+.name{
+    text-align: center;
+    text-decoration: underline;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import Name from "./NameInput";
 import Email from "./EmailInput";
 import Phone from "./PhoneInput";
+import styles from "../styles/GeneralSection.module.css"
 
 class General extends React.Component {
   constructor(props) {
@@ -20,10 +21,16 @@ class General extends React.Component {
 
   render() {
     return (
-      <div>
-        <Name UpdateProps={this.Update} nameProp={this.state.name} />
-        <Email UpdateProps={this.Update} emailProp={this.state.email}/>
-        <Phone UpdateProps={this.Update} phoneProp={this.state.phoneNumber}  />
+      <div className={styles.general}>
+        <div className={styles.name}>
+          <Name UpdateProps={this.Update} nameProp={this.state.name} />
+        </div>
+        <div className={styles.email}>
+          <Email UpdateProps={this.Update} emailProp={this.state.email}/>
+        </div>
+        <div className={styles.phone}>
+          <Phone UpdateProps={this.Update} phoneProp={this.state.phoneNumber}/>
+        </div>
       </div>
     );
   }

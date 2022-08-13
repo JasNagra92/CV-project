@@ -1,4 +1,5 @@
 import React from "react";
+import {AiTwotoneMail} from "react-icons/ai"
 
 class Email extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class Email extends React.Component {
           />
         </form>
         <p style={editMode} onDoubleClick={(e) => this.handleSubmit(e)}>
-          Email: {this.props.emailProp}
+          <AiTwotoneMail/>Email: {this.props.emailProp}
         </p>
       </div>
     );
