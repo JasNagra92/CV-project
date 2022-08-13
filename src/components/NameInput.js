@@ -28,8 +28,12 @@ class Name extends React.Component {
     }
     return (
       <div>
-        <form style={viewMode}onSubmit={(e) => this.handleSubmit(e)}>
-          <label>Name: </label>
+        <h1 onClick={(e) => this.handleSubmit(e)} style={viewMode}>
+          {this.props.nameProp}
+        </h1>
+
+        <form style={editMode} onSubmit={(e) => this.handleSubmit(e)}>
+          <label>Full Name: </label>
           <input
             type="text"
             name="name"
@@ -37,9 +41,6 @@ class Name extends React.Component {
             onChange={(e) => UpdateProps(e)}
           />
         </form>
-        <p style={editMode} onDoubleClick={(e) => this.handleSubmit(e)}>
-          Name: {this.props.nameProp}
-        </p>
       </div>
     );
   }
