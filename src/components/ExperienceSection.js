@@ -55,7 +55,7 @@ const Experience = (props) => {
   const showForm = () => {
     setJobState({
       ...JobState,
-      editable: !this.state.editable,
+      editable: !JobState.editable,
     });
   };
 
