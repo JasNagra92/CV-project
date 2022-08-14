@@ -4,3 +4,9 @@
     align-items: center;
     gap: 15px;
 }
+.container{
+    border-bottom: 5px dotted black;
+}
+.date{
+    font-style: italic;
+}

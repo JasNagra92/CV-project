@@ -1,0 +1,7 @@
+.date{
+    font-style: italic;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}

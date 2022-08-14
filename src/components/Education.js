@@ -1,24 +1,24 @@
-import React from 'react';
-import styles from '../styles/EducationSection.module.css';
-import EducationItem from './EducationItem';
-import uniqid from 'uniqid';
+import React from "react";
+import styles from "../styles/EducationSection.module.css";
+import EducationItem from "./EducationItem";
+import uniqid from "uniqid";
+
 
 class Education extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       education: [],
-      school: '',
-      subject: '',
-      startDate: '',
-      endDate: '',
+      school: "",
+      subject: "",
+      startDate: "",
+      endDate: "",
       editable: false,
     };
   }
   handleEdit = (e, id) => {
     this.setState({
       education: this.state.education.map((educationItem) => {
-        console.log(id);
         if (educationItem.id === id) {
           return { ...educationItem, [e.target.name]: e.target.value };
         } else {
@@ -27,17 +27,9 @@ class Education extends React.Component {
       }),
     });
   };
-  handleSubmit = (e) => {
-    e.preventDefault();
-  };
   handleInput = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-    });
-  };
-  showForm = () => {
-    this.setState({
-      editable: !this.state.editable,
     });
   };
   handleAdd = (e) => {
@@ -51,29 +43,41 @@ class Education extends React.Component {
     };
     this.setState({
       education: [...this.state.education, newEducation],
-      school: '',
-      subject: '',
-      startDate: '',
-      endDate: '',
+      school: "",
+      subject: "",
+      startDate: "",
+      endDate: "",
       editable: false,
+    });
+  };
+  showForm = () => {
+    this.setState({
+      editable: !this.state.editable,
     });
   };
   render() {
     const editMode = {};
+    const viewMode = {}
     if (this.state.editable) {
-      editMode.display = 'flex';
+      editMode.display = "flex";
     } else {
-      editMode.display = 'none';
+      editMode.display = "none";
     }
 
+    let {hideButtons} = this.props
+
+    if (hideButtons){
+      viewMode.display = 'none'
+    } else {viewMode.display = 'block'}
+
     return (
-      <div>
+      <div className={styles.container}>
         <ul>
           {this.state.education.map((educationItem) => {
             return (
               <EducationItem
-                key={this.state.school}
-                EducationItem={educationItem}
+                key={educationItem.id}
+                educationItem={educationItem}
                 handleEditProps={this.handleEdit}
               />
             );
@@ -82,7 +86,6 @@ class Education extends React.Component {
         <form
           style={editMode}
           className={styles.form}
-          onSubmit={() => this.handleSubmit}
         >
           <div>
             <label>School Name: </label>
@@ -125,7 +128,7 @@ class Education extends React.Component {
           </div>
           <button onClick={(e) => this.handleAdd(e)}>Add</button>
         </form>
-        <button onClick={() => this.showForm()}>Add Education</button>
+        <button style={viewMode} onClick={this.showForm}>Add Education</button>
       </div>
     );
   }
