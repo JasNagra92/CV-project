@@ -1,48 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../styles/EducationSection.module.css";
 import EducationItem from "./EducationItem";
 import uniqid from "uniqid";
 
+const Education = (props) => {
+  const [EducationState, setEducationState] = useState({
+    education: [],
+    school: "",
+    subject: "",
+    startDate: "",
+    endDate: "",
+    editable: false,
+  });
 
-class Education extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      education: [],
-      school: "",
-      subject: "",
-      startDate: "",
-      endDate: "",
-      editable: false,
-    };
-  }
-  handleEdit = (e, id) => {
-    this.setState({
-      education: this.state.education.map((educationItem) => {
+  const handleEdit = (e, id) => {
+    setEducationState({
+      ...EducationState,
+      education: EducationState.education.map((educationItem) => {
         if (educationItem.id === id) {
           return { ...educationItem, [e.target.name]: e.target.value };
-        } else {
-          return educationItem;
         }
+        return educationItem;
       }),
     });
   };
-  handleInput = (e) => {
-    this.setState({
+  const handleInput = (e) => {
+    setEducationState({
+      ...EducationState,
       [e.target.name]: e.target.value,
     });
   };
-  handleAdd = (e) => {
+  const handleAdd = (e) => {
     e.preventDefault();
     let newEducation = {
-      school: this.state.school,
-      subject: this.state.subject,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      school: EducationState.school,
+      subject: EducationState.subject,
+      startDate: EducationState.startDate,
+      endDate: EducationState.endDate,
       id: uniqid(),
     };
-    this.setState({
-      education: [...this.state.education, newEducation],
+    setEducationState({
+      education: [...EducationState.education, newEducation],
       school: "",
       subject: "",
       startDate: "",
@@ -50,87 +48,88 @@ class Education extends React.Component {
       editable: false,
     });
   };
-  showForm = () => {
-    this.setState({
-      editable: !this.state.editable,
+  const showForm = () => {
+    setEducationState({
+      ...EducationState,
+      editable: !EducationState.editable,
     });
   };
-  render() {
-    const editMode = {};
-    const viewMode = {}
-    if (this.state.editable) {
-      editMode.display = "flex";
-    } else {
-      editMode.display = "none";
-    }
 
-    let {hideButtons} = this.props
-
-    if (hideButtons){
-      viewMode.display = 'none'
-    } else {viewMode.display = 'block'}
-
-    return (
-      <div className={styles.container}>
-        <ul>
-          {this.state.education.map((educationItem) => {
-            return (
-              <EducationItem
-                key={educationItem.id}
-                educationItem={educationItem}
-                handleEditProps={this.handleEdit}
-              />
-            );
-          })}
-        </ul>
-        <form
-          style={editMode}
-          className={styles.form}
-        >
-          <div>
-            <label>School Name: </label>
-            <input
-              type="text"
-              onChange={(e) => this.handleInput(e)}
-              value={this.state.school}
-              name="school"
-            />
-          </div>
-
-          <div>
-            <label>Field of Study: </label>
-            <input
-              type="text"
-              onChange={(e) => this.handleInput(e)}
-              value={this.state.subject}
-              name="subject"
-            />
-          </div>
-
-          <div>
-            <label>Start Date: </label>
-            <input
-              type="text"
-              onChange={(e) => this.handleInput(e)}
-              value={this.state.startDate}
-              name="startDate"
-            />
-          </div>
-
-          <div>
-            <label>End Date: </label>
-            <input
-              type="text"
-              onChange={(e) => this.handleInput(e)}
-              value={this.state.endDate}
-              name="endDate"
-            />
-          </div>
-          <button onClick={(e) => this.handleAdd(e)}>Add</button>
-        </form>
-        <button style={viewMode} onClick={this.showForm}>Add Education</button>
-      </div>
-    );
+  const editMode = {};
+  const viewMode = {};
+  if (EducationState.editable) {
+    editMode.display = "flex";
+  } else {
+    editMode.display = "none";
   }
-}
+
+  let { hideButtons } = props;
+
+  if (hideButtons) {
+    viewMode.display = "none";
+  } else {
+    viewMode.display = "block";
+  }
+
+  return (
+    <div className={styles.container}>
+      <ul>
+        {EducationState.education.map((educationItem) => {
+          return (
+            <EducationItem
+              key={educationItem.id}
+              educationItem={educationItem}
+              handleEditProps={handleEdit}
+            />
+          );
+        })}
+      </ul>
+      <form style={editMode} className={styles.form}>
+        <div>
+          <label>School Name: </label>
+          <input
+            type="text"
+            onChange={handleInput}
+            value={EducationState.school}
+            name="school"
+          />
+        </div>
+
+        <div>
+          <label>Field of Study: </label>
+          <input
+            type="text"
+            onChange={handleInput}
+            value={EducationState.subject}
+            name="subject"
+          />
+        </div>
+
+        <div>
+          <label>Start Date: </label>
+          <input
+            type="text"
+            onChange={handleInput}
+            value={EducationState.startDate}
+            name="startDate"
+          />
+        </div>
+
+        <div>
+          <label>End Date: </label>
+          <input
+            type="text"
+            onChange={handleInput}
+            value={EducationState.endDate}
+            name="endDate"
+          />
+        </div>
+        <button onClick={handleAdd}>Add</button>
+      </form>
+      <button style={viewMode} onClick={showForm}>
+        Add Education
+      </button>
+    </div>
+  );
+};
 export default Education;

@@ -1,59 +1,42 @@
-import React from "react";
-import {AiFillPhone} from 'react-icons/ai'
+import React, { useState } from "react";
+import { AiFillPhone } from "react-icons/ai";
 
-class Phone extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editable: true,
-    };
-  }
+const Phone = (props) => {
+  const [editable, setEditable] = useState(false);
 
-  handleDone = (e) => {
-    if (e.key === "Enter") {
-      this.setState({
-        editable: false,
-      });
-    }
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-        editable: !this.state.editable
-    })
+    setEditable(!editable);
   };
 
-  render() {
-    const { UpdateProps } = this.props;
-    let editMode = {};
-    let viewMode = {};
+  const { UpdateProps, phoneProp } = props;
+  let editMode = {};
+  let viewMode = {};
 
-    if (this.state.editable) {
-      editMode.display = "block";
-      viewMode.display = "none";
-    } else {
-      editMode.display = "none";
-      viewMode.display = "block";
-    }
-
-    return (
-      <div>
-        <form style={editMode} onSubmit={(e) => this.handleSubmit(e)}>
-          <label>Phone Number: </label>
-          <input
-            type="text"
-            name="phoneNumber"
-            value={this.props.phoneNumber}
-            onChange={(e) => UpdateProps(e)}
-          />
-        </form>
-        <p 
-        style={viewMode}
-        onDoubleClick={(e) => this.handleSubmit(e)}
-        ><AiFillPhone />Phone Number: {this.props.phoneProp}</p>
-      </div>
-    );
+  if (editable) {
+    editMode.display = "block";
+    viewMode.display = "none";
+  } else {
+    editMode.display = "none";
+    viewMode.display = "block";
   }
-}
+
+  return (
+    <div>
+      <form style={viewMode} onSubmit={handleSubmit}>
+        <label>Phone Number: </label>
+        <input
+          type="text"
+          name="phoneNumber"
+          value={phoneProp}
+          onChange={UpdateProps}
+        />
+      </form>
+      <p style={editMode} onClick={handleSubmit}>
+        <AiFillPhone />
+        Phone Number: {phoneProp}
+      </p>
+    </div>
+  );
+};
 export default Phone;

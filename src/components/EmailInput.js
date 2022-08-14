@@ -1,49 +1,37 @@
-import React from "react";
-import {AiTwotoneMail} from "react-icons/ai"
+import React, { useState } from "react";
+import { AiTwotoneMail } from "react-icons/ai";
 
-class Email extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editable: false,
-    };
-  }
-  handleSubmit = (e) => {
+const Email = (props) => {
+  const [editable, setEditable] = useState(false);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      editable: !this.state.editable,
-    });
+    setEditable(!editable);
   };
 
-  render() {
-    const { UpdateProps } = this.props;
-    let editMode = {};
-    let viewMode = {};
+  const { UpdateProps, emailProp } = props;
+  let editMode = {};
+  let viewMode = {};
 
-    if (this.state.editable) {
-      editMode.display = "block";
-      viewMode.display = "none";
-    } else {
-      viewMode.display = "block";
-      editMode.display = "none";
-    }
-
-    return (
-      <div>
-        <form style={viewMode} onSubmit={(e) => this.handleSubmit(e)}>
-          <label>Email: </label>
-          <input
-            type="text"
-            name="email"
-            value={this.props.email}
-            onChange={(e) => UpdateProps(e)}
-          />
-        </form>
-        <p style={editMode} onDoubleClick={(e) => this.handleSubmit(e)}>
-          <AiTwotoneMail/>Email: {this.props.emailProp}
-        </p>
-      </div>
-    );
+  if (editable) {
+    editMode.display = "block";
+    viewMode.display = "none";
+  } else {
+    viewMode.display = "block";
+    editMode.display = "none";
   }
-}
+
+  return (
+    <div>
+      <form style={viewMode} onSubmit={handleSubmit}>
+        <label>Email: </label>
+        <input type="text" name="email" value={emailProp} onChange={UpdateProps} />
+      </form>
+      <p style={editMode} onClick={handleSubmit}>
+        <AiTwotoneMail />
+        Email: {emailProp}
+      </p>
+    </div>
+  );
+};
 export default Email;

@@ -1,48 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 
-class Name extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editable: false,
-    };
-  }
-  handleSubmit = (e) => {
+const Name = (props) => {
+  const [editable, setEditable] = useState(false);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      editable: !this.state.editable,
-    });
+    setEditable(!editable);
   };
 
-  render() {
-    const { UpdateProps } = this.props;
-    let editMode = {};
-    let viewMode = {};
+  const { UpdateProps, nameProp } = props;
+  let editMode = {};
+  let viewMode = {};
 
-    if (this.state.editable) {
-      editMode.display = "block";
-      viewMode.display = "none";
-    } else {
-      viewMode.display = "block";
-      editMode.display = "none";
-    }
-    return (
-      <div>
-        <h1 onClick={(e) => this.handleSubmit(e)} style={viewMode}>
-          {this.props.nameProp}
-        </h1>
-
-        <form style={editMode} onSubmit={(e) => this.handleSubmit(e)}>
-          <label>Full Name: </label>
-          <input
-            type="text"
-            name="name"
-            value={this.props.name}
-            onChange={(e) => UpdateProps(e)}
-          />
-        </form>
-      </div>
-    );
+  if (editable) {
+    editMode.display = "block";
+    viewMode.display = "none";
+  } else {
+    viewMode.display = "block";
+    editMode.display = "none";
   }
-}
+  return (
+    <div>
+      <h1 onClick={handleSubmit} style={viewMode}>
+        {nameProp}
+      </h1>
+
+      <form style={editMode} onSubmit={handleSubmit}>
+        <label>Full Name: </label>
+        <input
+          type="text"
+          name="name"
+          value={nameProp}
+          onChange={(e) => UpdateProps(e)}
+        />
+      </form>
+    </div>
+  );
+};
 export default Name;
